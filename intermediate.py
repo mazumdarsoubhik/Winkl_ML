@@ -309,8 +309,8 @@ while(len(data['users']) !=0 and pages<1):
                     per[x] = round((per[x]/per_sum)*100)
                 frame['Percentage'] = per
                 
-                print(frame['Percentage'].tolist())
-                print(top_keywords)
+#                 print(frame['Percentage'].tolist())
+#                 print(top_keywords)
                 
                 #Store profile percentage
                 row_df_5 = get_row_pscore(col_name,dfnew,i,frame,'Percentage')
