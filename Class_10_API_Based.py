@@ -323,7 +323,7 @@ while(len(data['users']) !=0 and pages<1):
     #                 raise Exception("Post request error {}".format(y.status_code))
 
                 # print(type(file))
-                # print(file)
+                print(file)
                 idsdone = idsdone +1
 
             except Exception as Argument:
