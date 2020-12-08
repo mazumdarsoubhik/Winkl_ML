@@ -173,12 +173,12 @@ def sort_cat(dev,cat, thre = 2):   # Shortlist using thre | Return category arra
     return final_cat
 
 def get_row_pscore(col_name,f1,i,f2, scoreType):  # f1-mainframe | f2-frame
-    ud = f1.at[i,'id']
-    ul = f1.at[i,'url']
+    ud = f1.loc[i,'id']
+    ul = f1.loc[i,'url']
     row_in_array = [ud,ul]
     dev_array = f2[scoreType].tolist()
     row_in_array.extend(dev_array)
-    tk = f2.at[0,'Top keywords']
+    tk = f2.loc[0,'Top keywords']
     row_in_array.extend([tk])
     zip_it = zip(col_name,row_in_array)
     convert_to_dict = dict(zip_it)
