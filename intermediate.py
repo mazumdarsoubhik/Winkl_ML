@@ -28,8 +28,8 @@ tic = time.time()
 # print("Loaded GoogleNews!")
 
 class w:
-    def similarity(a,b):
-        return 0.15
+    def similarity(a = 'ali',b='baba'):
+        return len(a+b)/50
 
 def process(array,avoidwords):
     text = re.sub(r'\[[0-9]*\]',' ',str(array))  #Remove Numbers
