@@ -22,6 +22,10 @@ import json
 print("Imported all packages.")
 
 tic = time.time()
+print("Loading GoogleNews...")
+from gensim import models
+w = models.KeyedVectors.load_word2vec_format(r"../GoogleNews-vectors-negative300.bin.gz", binary=True)
+print("Loaded GoogleNews!")
 
 def process(array,avoidwords):
     text = re.sub(r'\[[0-9]*\]',' ',str(array))  #Remove Numbers
@@ -274,6 +278,14 @@ while(len(data['users']) !=0 and pages<1):
                 
                 #Temporary array i-> interim
                 icaption_array = [i for i in caption_array]
+                # Removing words not in dictionary also single characters
+                for x in caption_array:
+                    try:
+                        checkword = w.similarity(x,'something') #Check word if exist in googlenews
+                        if len(x) <2: #Removing single character
+                            icaption_array.pop(icaption_array.index(x))
+                    except KeyError:
+                        icaption_array.pop(icaption_array.index(x))
                 
                 if len(caption_array) ==0:
                     raise Exception("No Words in profile for categorization or Different language")
@@ -281,6 +293,10 @@ while(len(data['users']) !=0 and pages<1):
                 # Punishing accounts which has less than 1.5 words in caption
                 if len(caption_array) < 2*(total_posts):
                     raise Exception("Too less words for categorization")
+                
+                # Word2vec computation
+                frame = pd.DataFrame()
+                frame, top_keywords = compute(caption_array,categories,3)
 
                 idsdone = idsdone +1
 
