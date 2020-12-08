@@ -306,7 +306,8 @@ while(len(data['users']) !=0 and pages<1):
                 per = frame['Scores'].tolist()
                 per_sum = sum(per)
                 for x in range(len(per)):
-                    per[x] = round((per[x]/per_sum)*100)
+                    temp_number = (float)(per[x])
+                    per[x] = round((temp_number/per_sum)*100)
                 frame['Percentage'] = per
                 
 #                 print(frame['Percentage'].tolist())
