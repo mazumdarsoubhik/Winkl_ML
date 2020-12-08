@@ -22,14 +22,12 @@ import json
 print("Imported all packages.")
 
 tic = time.time()
-# print("Loading GoogleNews...")
-# from gensim import models
-# w = models.KeyedVectors.load_word2vec_format(r"../GoogleNews-vectors-negative300.bin.gz", binary=True)
-# print("Loaded GoogleNews!")
+print("Loading GoogleNews...")
+from gensim import models
+w = models.KeyedVectors.load_word2vec_format(r"../GoogleNews-vectors-negative300.bin.gz", binary=True, limit=10000)
+print("Loaded GoogleNews!")
 
-class w:
-    def similarity(a = 'ali',b='baba'):
-        return len(a+b)/50
+
 
 def process(array,avoidwords):
     text = re.sub(r'\[[0-9]*\]',' ',str(array))  #Remove Numbers
