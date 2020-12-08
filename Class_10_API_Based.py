@@ -25,7 +25,7 @@ tic = time.time()
 
 print("Loading GoogleNews...")
 from gensim import models
-w = models.KeyedVectors.load_word2vec_format(r"GoogleNews-vectors-negative300.bin.gz", binary=True)
+w = models.KeyedVectors.load_word2vec_format(r"../GoogleNews-vectors-negative300.bin.gz", binary=True)
 print("Loaded GoogleNews!")
 
 
