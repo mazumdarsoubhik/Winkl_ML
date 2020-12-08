@@ -337,7 +337,7 @@ while(len(data['users']) !=0 and pages<1):
         # END of Main Categorization #
         profile_percentages.to_csv(r'test1.csv')
         pages = pages +1
-        toc = time.perf_counter()
+        toc = time.time()
         print(txt.format(pages,last_id,toc-new_tic))
         # Request new page
         x = requests.get('http://44.229.68.155/insta_users/get_uncategorized_accounts?limit=10&current_id='+str(last_id), headers={'Authorization': 'Token ruor7REQi9KJz6wIQKDXvwtt'})
@@ -355,7 +355,7 @@ while(len(data['users']) !=0 and pages<1):
     
     
 
-toc = time.perf_counter()
+toc = time.time()
 f = open(r"testerror1.txt", "a") 
 # writing in the file 
 f.write("The model ran in "+str(toc - tic)+" seconds"+str("\n")) 
