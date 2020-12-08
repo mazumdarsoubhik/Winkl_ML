@@ -286,6 +286,8 @@ while(len(data['users']) !=0 and pages<1):
                             icaption_array.pop(icaption_array.index(x))
                     except KeyError:
                         icaption_array.pop(icaption_array.index(x))
+                #Restore Array
+                caption_array = [i for i in icaption_array]
                 
                 if len(caption_array) ==0:
                     raise Exception("No Words in profile for categorization or Different language")
