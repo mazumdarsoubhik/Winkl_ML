@@ -222,13 +222,13 @@ def get_row_result(col_name,f1,f2,rank_array):  # f1-mainframe
 def to_dict_api(percentages,categories,top_keywords,frame,i): #frame and i to get id
     mydict = {}
     cat_array =[]
-    empty_percent = [0]*4
+    empty_percent = [0]*(len(categories)-len(percentages))
     percent_array = [y for y in percentages]
     percent_array.extend(empty_percent)
-    mydict['user_id'] = frame['id'].iloc[i]
-    mydict['keywords'] = json.dumps(top_keywords)
-    for i in range(len(categories)):
-        cat_array.append({'tag':categories[i],'percentage':percent_array[i]})
+    mydict['user_id'] = frame.loc[i,'id']
+    mydict['keywords'] = json.dumps(top_keywords.tolist())
+    for j in range(len(categories)):
+        cat_array.append({'tag':categories[j],'percentage':percent_array[j]})
     mydict['categories'] = json.dumps(cat_array)
     return mydict
 
