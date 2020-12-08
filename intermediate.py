@@ -279,7 +279,7 @@ while(len(data['users']) !=0 and pages<1):
                 caption_array = captions[0]
                 
                 #Temporary array i-> interim
-                icaption_array = [i for i in caption_array]
+                icaption_array = [z for z in caption_array]
                 # Removing words not in dictionary also single characters
                 for x in caption_array:
                     try:
@@ -289,7 +289,7 @@ while(len(data['users']) !=0 and pages<1):
                     except KeyError:
                         icaption_array.pop(icaption_array.index(x))
                 #Restore Array
-                caption_array = [i for i in icaption_array]
+                caption_array = [z for z in icaption_array]
                 
                 if len(caption_array) ==0:
                     raise Exception("No Words in profile for categorization or Different language")
