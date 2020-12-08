@@ -301,7 +301,7 @@ while(len(data['users']) !=0 and pages<1):
                 # Word2vec computation
                 frame = pd.DataFrame()
                 frame, top_keywords = compute(caption_array,categories,3)
-                print(frame['Scores'].tolist())
+                
                 #Convert to Percentage
                 per = frame['Scores'].tolist()
                 per_sum = sum(per)
@@ -310,12 +310,12 @@ while(len(data['users']) !=0 and pages<1):
                     per[x] = round((temp_number/per_sum)*100)
                 frame['Percentage'] = per
                 
-#                 print(frame['Percentage'].tolist())
-#                 print(top_keywords)
+                print(frame['Percentage'].tolist())
+                print(top_keywords)
                 
-                #Store profile percentage
-                row_df_5 = get_row_pscore(col_name,dfnew,i,frame,'Percentage')
-                profile_percentages = profile_percentages.append(row_df_5,ignore_index=True)
+#                 #Store profile percentage
+#                 row_df_5 = get_row_pscore(col_name,dfnew,i,frame,'Percentage')
+#                 profile_percentages = profile_percentages.append(row_df_5,ignore_index=True)
 
                 # POST API Request
                 file = to_dict_api(frame['Percentage'].tolist(),API_categories,top_keywords,dfnew,i)
@@ -325,7 +325,7 @@ while(len(data['users']) !=0 and pages<1):
     #             if y.status_code !=200:
     #                 raise Exception("Post request error {}".format(y.status_code))
 
-                # print(type(file))
+                print(type(file))
                 print(file)
             
                 idsdone = idsdone +1
