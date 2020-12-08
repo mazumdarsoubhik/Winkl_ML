@@ -305,7 +305,9 @@ while(len(data['users']) !=0 and pages<1):
                     per[x] = round((per[x]/per_sum)*100)
                 frame['Percentage'] = per
                 frame['Top keywords'] = ', '.join(top_keywords)
-                print(frame)
+                print(frame['Percentages'].tolist())
+                print(frame['Top keywords'].tolist())
+                
                 
                 idsdone = idsdone +1
 
