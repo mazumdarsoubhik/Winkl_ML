@@ -328,7 +328,7 @@ while(len(data['users']) !=0 and pages<1):
 
             except Exception as Argument:
                 # creating/opening a file 
-                f = open(r"testerror1.txt", "a") 
+                f = open(r"e1.txt", "a") 
                 # writing in the file 
                 f.write("Userid\t"+str(userid)+"\t: "+str(Argument)+str("\n")) 
                 # closing the file 
@@ -347,7 +347,7 @@ while(len(data['users']) !=0 and pages<1):
     
     except Exception as Argument:
         # creating/opening a file 
-        f = open(r"testerror1.txt", "a") 
+        f = open(r"e1.txt", "a") 
         # writing in the file 
         f.write("Currently in "+str(pages)+"\t"+str(Argument)+str("\n")) 
         # closing the file 
@@ -356,7 +356,7 @@ while(len(data['users']) !=0 and pages<1):
     
 
 toc = time.time()
-f = open(r"testerror1.txt", "a") 
+f = open(r"e1.txt", "a") 
 # writing in the file 
 f.write("The model ran in "+str(toc - tic)+" seconds"+str("\n")) 
 f.write("Total ids done: "+str(idsdone)+"\n")
