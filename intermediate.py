@@ -297,7 +297,19 @@ while(len(data['users']) !=0 and pages<1):
                 # Word2vec computation
                 frame = pd.DataFrame()
                 frame, top_keywords = compute(caption_array,categories,3)
-
+                
+                #Convert to Percentage
+                per = frame['Scores'].tolist()
+                per_sum = sum(per)
+                for x in range(len(per)):
+                    per[x] = round((per[x]/per_sum)*100)
+                frame['Percentage'] = per
+                frame['Top keywords'] = ', '.join(top_keywords)
+                print(frame)
+                #Store profile percentage
+                row_df_5 = get_row_pscore(col_name,dfnew,i,frame,'Percentage')
+                profile_percentages = profile_percentages.append(row_df_5,ignore_index=True)
+                
                 idsdone = idsdone +1
 
             except Exception as Argument:
