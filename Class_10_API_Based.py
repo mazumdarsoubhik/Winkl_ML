@@ -25,7 +25,7 @@ tic = time.time()
 
 print("Loading GoogleNews...")
 from gensim import models
-w = models.KeyedVectors.load_word2vec_format(r"GoogleNews-vectors-negative300.bin.gz", binary=True)
+w = models.KeyedVectors.load_word2vec_format(r"../GoogleNews-vectors-negative300.bin.gz", binary=True)
 print("Loaded GoogleNews!")
 
 
@@ -326,7 +326,7 @@ while(len(data['users']) !=0 and pages<1):
                 # print(file)
                 idsdone = idsdone +1
 
-            except:
+            except Exception as Argument:
                 # creating/opening a file 
                 f = open(r"testerror1.txt", "a") 
                 # writing in the file 
@@ -345,7 +345,7 @@ while(len(data['users']) !=0 and pages<1):
         df = pd.DataFrame(data['users'])
         status = x.status_code
     
-    except:
+    except Exception as Argument:
         # creating/opening a file 
         f = open(r"testerror1.txt", "a") 
         # writing in the file 
@@ -359,8 +359,8 @@ toc = time.perf_counter()
 f = open(r"testerror1.txt", "a") 
 # writing in the file 
 f.write("The model ran in "+str(toc - tic)+" seconds"+str("\n")) 
-f.write("Total ids done: "+str(idsdone))
-f.write("Last user_id {}".format(last_id))
+f.write("Total ids done: "+str(idsdone)+"\n")
+f.write("Last user_id {}".format(last_id)+"\n")
 # closing the file 
 f.close() 
 
