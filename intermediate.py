@@ -22,10 +22,14 @@ import json
 print("Imported all packages.")
 
 tic = time.time()
-print("Loading GoogleNews...")
-from gensim import models
-w = models.KeyedVectors.load_word2vec_format(r"../GoogleNews-vectors-negative300.bin.gz", binary=True)
-print("Loaded GoogleNews!")
+# print("Loading GoogleNews...")
+# from gensim import models
+# w = models.KeyedVectors.load_word2vec_format(r"../GoogleNews-vectors-negative300.bin.gz", binary=True)
+# print("Loaded GoogleNews!")
+
+class w:
+    def similarity(a,b):
+        return 0.15
 
 def process(array,avoidwords):
     text = re.sub(r'\[[0-9]*\]',' ',str(array))  #Remove Numbers
@@ -274,7 +278,7 @@ while(len(data['users']) !=0 and pages<1):
 
                 #Converting to keywords
                 captions = process(captions,avoidwords)
-                caption_array = soft_flat(captions)
+                caption_array = captions[0]
                 
                 #Temporary array i-> interim
                 icaption_array = [i for i in caption_array]
@@ -300,14 +304,14 @@ while(len(data['users']) !=0 and pages<1):
                 frame = pd.DataFrame()
                 frame, top_keywords = compute(caption_array,categories,3)
                 print(frame['Scores'].tolist())
-#                 #Convert to Percentage
-#                 per = frame['Scores'].tolist()
-#                 per_sum = sum(per)
-#                 for x in range(len(per)):
-#                     per[x] = round((per[x]/per_sum)*100)
-#                 frame['Percentage'] = per
-#                 frame['Top keywords'] = ', '.join(top_keywords)
-#                 print(frame['Percentage'].tolist())
+                #Convert to Percentage
+                per = frame['Scores'].tolist()
+                per_sum = sum(per)
+                for x in range(len(per)):
+                    per[x] = round((per[x]/per_sum)*100)
+                frame['Percentage'] = per
+                
+                print(frame['Percentage'].tolist())
                 print(top_keywords)
                 
                 
