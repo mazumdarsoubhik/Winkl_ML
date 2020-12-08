@@ -251,7 +251,7 @@ pages = 0
 idsdone = 0
 txt = "Done {} pages, the last_id is {} and time taken {} seconds"
 
-while(len(data['users']) !=0 and pages<1):
+while(len(data['users']) !=0 and pages<4):
     try:
         new_tic = time.time()
         if(status != 200):
@@ -313,10 +313,9 @@ while(len(data['users']) !=0 and pages<1):
                 print(frame['Percentage'].tolist())
                 print(top_keywords)
                 
-#                 #Store profile percentage
-#                 row_df_5 = get_row_pscore(col_name,dfnew,i,frame,'Percentage')
-#                 profile_percentages = profile_percentages.append(row_df_5,ignore_index=True)
-                print("entering to_dict_api")
+                #Store profile percentage
+                row_df_5 = get_row_pscore(col_name,dfnew,i,frame,'Percentage')
+                profile_percentages = profile_percentages.append(row_df_5,ignore_index=True)
                 # POST API Request
                 file = to_dict_api(frame['Percentage'].tolist(),API_categories,top_keywords,dfnew,i)
     #             url = 'http://44.229.68.155/insta_user/add_category_to_insta_user'
@@ -324,7 +323,7 @@ while(len(data['users']) !=0 and pages<1):
 
     #             if y.status_code !=200:
     #                 raise Exception("Post request error {}".format(y.status_code))
-                print("Done to_dict_api")
+
                 print(type(file))
                 print(file)
                 
