@@ -226,7 +226,7 @@ def to_dict_api(percentages,categories,top_keywords,frame,i): #frame and i to ge
     percent_array = [y for y in percentages]
     percent_array.extend(empty_percent)
     mydict['user_id'] = frame['id'].iloc[i]
-    mydict['keywords'] = json.dumps(top_keywords.tolist())
+    mydict['keywords'] = json.dumps(top_keywords)
     for i in range(len(categories)):
         cat_array.append({'tag':categories[i],'percentage':percent_array[i]})
     mydict['categories'] = json.dumps(cat_array)
@@ -316,7 +316,7 @@ while(len(data['users']) !=0 and pages<1):
 #                 #Store profile percentage
 #                 row_df_5 = get_row_pscore(col_name,dfnew,i,frame,'Percentage')
 #                 profile_percentages = profile_percentages.append(row_df_5,ignore_index=True)
-
+                print("entering to_dict_api")
                 # POST API Request
                 file = to_dict_api(frame['Percentage'].tolist(),API_categories,top_keywords,dfnew,i)
     #             url = 'http://44.229.68.155/insta_user/add_category_to_insta_user'
@@ -324,10 +324,10 @@ while(len(data['users']) !=0 and pages<1):
 
     #             if y.status_code !=200:
     #                 raise Exception("Post request error {}".format(y.status_code))
-
+                print("Done to_dict_api")
                 print(type(file))
                 print(file)
-            
+                
                 idsdone = idsdone +1
 
             except Exception as Argument:
