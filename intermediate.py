@@ -24,7 +24,7 @@ print("Imported all packages.")
 tic = time.time()
 print("Loading GoogleNews...")
 from gensim import models
-w = models.KeyedVectors.load_word2vec_format(r"../GoogleNews-vectors-negative300.bin.gz", binary=True, limit=10000)
+w = models.KeyedVectors.load_word2vec_format(r"../GoogleNews-vectors-negative300.bin.gz", binary=True, limit = 10000)
 print("Loaded GoogleNews!")
 
 
@@ -165,54 +165,15 @@ def dev_shortlist(dev_array,thre = 2):  # Shortlist using threshold from deviati
             final_cat[i] = 1
     return final_cat
 
-def sort_cat(dev,cat, thre = 2):   # Shortlist using thre | Return category array
-    final_cat = []
-    for i in range(len(dev)):
-        if dev[i] <=thre:
-            final_cat.append(cat[i])
-    return final_cat
-
-def get_row_pscore(col_name,f1,i,f2, scoreType):  # f1-mainframe | f2-frame
+def get_row_pscore(col_name,f1,i,f2,top_keywords, scoreType):  # f1-mainframe | f2-frame
     ud = f1.loc[i,'id']
     ul = f1.loc[i,'url']
     row_in_array = [ud,ul]
-    dev_array = f2[scoreType].tolist()
-    row_in_array.extend(dev_array)
-    tk = f2.loc[0,'Top keywords']
-    row_in_array.extend([tk])
-    zip_it = zip(col_name,row_in_array)
-    convert_to_dict = dict(zip_it)
-    return convert_to_dict
-
-def top_category(f2,categories,thre=2):
-    final_cat = [0]*len(categories)
-    dev_scores = f2['Deviation'].tolist()
-    rank_of_cat = 1
-    for i in range(len(dev_scores)):
-        if dev_scores[i] <=thre:
-            final_cat[i] = rank_of_cat 
-            rank_of_cat = rank_of_cat +1
-    return final_cat
-
-def top_category_get_percent(f2,categories,thre=2):
-    final_cat = [0]*len(categories)
-    dev_scores = f2['Deviation'].tolist()
-    percent_array = f2['Percentage'].tolist()
-    for i in range(len(dev_scores)):
-        if dev_scores[i] <=thre:
-            final_cat[i] = percent_array[i]
-    return final_cat
-    
-    
-def get_row_result(col_name,f1,f2,rank_array):  # f1-mainframe
-    ud = f1.at[0,'user_id']
-    hd = f1.at[0,'handle']
-    fl = f1.at[0,'followers']
-    ul = f1.at[0,'url']
-    row_in_array = [ud,hd,fl,ul]
-    row_in_array.extend(rank_array)
-    tk = f2.at[0,'Top keywords']
-    row_in_array.extend([tk])
+    score_array = f2[scoreType].tolist()
+    empty_score = [0]*(len(col_name)-len(score_array)-3)
+    score_array.extend(empty_score)
+    row_in_array.extend(score_array)
+    row_in_array.extend([top_keywords])
     zip_it = zip(col_name,row_in_array)
     convert_to_dict = dict(zip_it)
     return convert_to_dict
@@ -238,7 +199,7 @@ categories = ['food', 'fashion', 'makeup', 'beauty', 'lifestyle','luxury', 'trav
 API_categories = ['Food','Fashion', 'Makeup', 'Beauty', 'Lifestyle','Luxury', 'Travel','Photography','Fitness','Sports','Gaming', 'Entertainment', 'Gadgets & Tech','Finance','Education', 'Animal/Pet', 'Health','Art', 'Self Improvement', 'Parenting', 'Books']
 
 # This required to run some function
-col_name = ['user_id','url','food', 'fashion', 'makeup', 'beauty', 'lifestyle','luxury', 'travel', 'photography','fitness','sports','gaming', 'entertainment', 'technology','investment','education', 'animal', 'health', 'parenting','top keywords']
+col_name = ['user_id','url','Food','Fashion', 'Makeup', 'Beauty', 'Lifestyle','Luxury', 'Travel','Photography','Fitness','Sports','Gaming', 'Entertainment', 'Gadgets & Tech','Finance','Education', 'Animal/Pet', 'Health','Art', 'Self Improvement', 'Parenting', 'Books', 'top keywords']
 
 
 # void main() #
@@ -251,7 +212,7 @@ pages = 0
 idsdone = 0
 txt = "Done {} pages, the last_id is {} and time taken {} seconds"
 
-while(len(data['users']) !=0 and pages<4):
+while(len(data['users']) !=0 and pages<1):
     try:
         new_tic = time.time()
         if(status != 200):
@@ -259,7 +220,7 @@ while(len(data['users']) !=0 and pages<4):
         dfnew = pd.DataFrame(columns=['id','handle','name','url','gender','country','captions'], data = df[['id','handle','name','url','gender','country','captions']].values)
         last_id = dfnew['id'].iloc[-1]
         # Fresh dataframe
-        profile_percentages =  pd.DataFrame(columns = ['user_id','url','food', 'fashion', 'makeup', 'beauty', 'lifestyle','luxury', 'travel', 'photography','fitness','sports','gaming', 'entertainment', 'technology','investment','education', 'animal','health', 'parenting','top keywords'])
+        profile_percentages =  pd.DataFrame(columns = col_name)
 
 
         # Main Categorization # 
@@ -310,9 +271,12 @@ while(len(data['users']) !=0 and pages<4):
                     per[x] = round((temp_number/per_sum)*100)
                 frame['Percentage'] = per
                 
+                
                 #Store profile percentage
-                row_df_5 = get_row_pscore(col_name,dfnew,i,frame,'Percentage')
+                row_df_5 = get_row_pscore(col_name,dfnew,i,frame,top_keywords,'Percentage')
+                print(row_df_5)
                 profile_percentages = profile_percentages.append(row_df_5,ignore_index=True)
+                
                 # POST API Request
                 file = to_dict_api(frame['Percentage'].tolist(),API_categories,top_keywords,dfnew,i)
     #             url = 'http://44.229.68.155/insta_user/add_category_to_insta_user'
@@ -322,7 +286,7 @@ while(len(data['users']) !=0 and pages<4):
     #                 raise Exception("Post request error {}".format(y.status_code))
 
                 print(type(file))
-                print(file)
+                
                 
                 idsdone = idsdone +1
 
