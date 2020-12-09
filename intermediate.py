@@ -24,7 +24,7 @@ print("Imported all packages.")
 tic = time.time()
 print("Loading GoogleNews...")
 from gensim import models
-w = models.KeyedVectors.load_word2vec_format(r"../GoogleNews-vectors-negative300.bin.gz", binary=True, limit = 10000)
+w = models.KeyedVectors.load_word2vec_format(r"../GoogleNews-vectors-negative300.bin.gz", binary=True)
 print("Loaded GoogleNews!")
 
 
@@ -200,12 +200,12 @@ API_categories = ['Food','Fashion', 'Makeup', 'Beauty', 'Lifestyle','Luxury', 'T
 
 # This required to run some function
 col_name = ['user_id','url','Food','Fashion', 'Makeup', 'Beauty', 'Lifestyle','Luxury', 'Travel','Photography','Fitness','Sports','Gaming', 'Entertainment', 'Gadgets & Tech','Finance','Education', 'Animal/Pet', 'Health','Art', 'Self Improvement', 'Parenting', 'Books', 'top keywords']
-profile_percentages =  pd.DataFrame(columns = col_name)
-profile_percentages.to_csv(r'test1.csv',index= False)
+#profile_percentages =  pd.DataFrame(columns = col_name)
+#profile_percentages.to_csv(r'test1.csv',index= False)
 
 # void main() #
 
-x = requests.get('http://44.229.68.155/insta_users/get_uncategorized_accounts?limit=10&current_id=0', headers={'Authorization': 'Token ruor7REQi9KJz6wIQKDXvwtt'})
+x = requests.get('http://44.229.68.155/insta_users/get_uncategorized_accounts?limit=10&current_id=147', headers={'Authorization': 'Token ruor7REQi9KJz6wIQKDXvwtt'})
 status = x.status_code
 data = x.json()
 df = pd.DataFrame(data['users'])
@@ -213,7 +213,7 @@ pages = 0
 idsdone = 0
 txt = "Done {} pages, the last_id is {} and time taken {} seconds"
 
-while(len(data['users']) !=0 and pages<2):
+while(len(data['users']) !=0):
     try:
         new_tic = time.time()
         if(status != 200):
@@ -279,11 +279,11 @@ while(len(data['users']) !=0 and pages<2):
                 
                 # POST API Request
                 file = to_dict_api(frame['Percentage'].tolist(),API_categories,top_keywords,dfnew,i)
-    #             url = 'http://44.229.68.155/insta_user/add_category_to_insta_user'
-    #             y = requests.post(url, data = file,headers={'Authorization': 'Token ruor7REQi9KJz6wIQKDXvwtt'})
+                url = 'http://44.229.68.155/insta_user/add_category_to_insta_user'
+                y = requests.post(url, data = file,headers={'Authorization': 'Token ruor7REQi9KJz6wIQKDXvwtt'})
 
-    #             if y.status_code !=200:
-    #                 raise Exception("Post request error {}".format(y.status_code))
+                if y.status_code !=200:
+                     raise Exception("Post request error {}".format(y.status_code))
                 
                 print("ID no. {} Done! Total {} ids done".format(userid,idsdone))
                 idsdone = idsdone +1
