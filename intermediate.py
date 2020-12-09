@@ -200,7 +200,8 @@ API_categories = ['Food','Fashion', 'Makeup', 'Beauty', 'Lifestyle','Luxury', 'T
 
 # This required to run some function
 col_name = ['user_id','url','Food','Fashion', 'Makeup', 'Beauty', 'Lifestyle','Luxury', 'Travel','Photography','Fitness','Sports','Gaming', 'Entertainment', 'Gadgets & Tech','Finance','Education', 'Animal/Pet', 'Health','Art', 'Self Improvement', 'Parenting', 'Books', 'top keywords']
-
+profile_percentages =  pd.DataFrame(columns = col_name)
+profile_percentages.to_csv(r'test1.csv',index= False)
 
 # void main() #
 
@@ -212,7 +213,7 @@ pages = 0
 idsdone = 0
 txt = "Done {} pages, the last_id is {} and time taken {} seconds"
 
-while(len(data['users']) !=0 and pages<1):
+while(len(data['users']) !=0 and pages<2):
     try:
         new_tic = time.time()
         if(status != 200):
@@ -296,7 +297,7 @@ while(len(data['users']) !=0 and pages<1):
                 f.close()  
 
         # END of Main Categorization #
-        profile_percentages.to_csv(r'test1.csv')
+        profile_percentages.to_csv(r'test1.csv',mode='a',header=False,index =False)
         pages = pages +1
         toc = time.time()
         print(txt.format(pages,last_id,toc-new_tic))
