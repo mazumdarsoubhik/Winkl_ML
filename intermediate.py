@@ -274,7 +274,6 @@ while(len(data['users']) !=0 and pages<1):
                 
                 #Store profile percentage
                 row_df_5 = get_row_pscore(col_name,dfnew,i,frame,top_keywords,'Percentage')
-                print(row_df_5)
                 profile_percentages = profile_percentages.append(row_df_5,ignore_index=True)
                 
                 # POST API Request
@@ -284,10 +283,8 @@ while(len(data['users']) !=0 and pages<1):
 
     #             if y.status_code !=200:
     #                 raise Exception("Post request error {}".format(y.status_code))
-
-                print(type(file))
                 
-                
+                print("ID no. {} Done! Total {} ids done".format(userid,idsdone))
                 idsdone = idsdone +1
 
             except Exception as Argument:
